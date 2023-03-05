@@ -11,6 +11,7 @@ This package enables Firebase OAuth on desktop platforms via webview
 - Google
 - Facebook
 - Twitter
+- Spotify
 
 ## Installation
 
