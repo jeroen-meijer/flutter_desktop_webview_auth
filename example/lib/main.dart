@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:desktop_webview_auth/spotify.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/identitytoolkit/v3.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
@@ -17,10 +18,11 @@ void main() {
 typedef SignInCallback = Future<void> Function();
 const String apiKey = 'AIzaSyAgUhHU8wSJgO5MVNy95tMT07NEjzMOfz0';
 
-const GOOGLE_CLIENT_ID =
-    '448618578101-sg12d2qin42cpr00f8b0gehs5s7inm0v.apps.googleusercontent.com';
 const REDIRECT_URI =
     'https://react-native-firebase-testing.firebaseapp.com/__/auth/handler';
+
+const GOOGLE_CLIENT_ID =
+    '448618578101-sg12d2qin42cpr00f8b0gehs5s7inm0v.apps.googleusercontent.com';
 const TWITTER_API_KEY = 'YEXSiWv5UeCHyy0c61O2LBC3B';
 const TWITTER_API_SECRET_KEY =
     'DOd9dCCRFgtnqMDQT7A68YuGZtvcO4WP1mEFS4mEJAUooM4yaE';
@@ -28,6 +30,9 @@ const FACEBOOK_CLIENT_ID = '128693022464535';
 
 const GITHUB_CLIENT_ID = '582d07c80a9afae77406';
 const GITHUB_CLIENT_SECRET = '2d60f5e850bc178dfa6b7f6c6e37a65b175172d3';
+
+const String? SPOTIFY_CLIENT_ID = null; // Add your client id
+const String? SPOTIFY_CLIENT_SECRET = null; // Add your client secret
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -69,6 +74,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasSpotifyCredentials = [SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET]
+        .every((element) => element != null);
+
     return MaterialApp(
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -113,6 +121,22 @@ class MyApp extends StatelessWidget {
                     redirectUri: REDIRECT_URI,
                   ),
                 ),
+              ),
+              ElevatedButton(
+                child: Text(
+                  'Sign in with Spotify${hasSpotifyCredentials ? '' : ' (Enter credentials in code first)'}',
+                ),
+                onPressed: !hasSpotifyCredentials
+                    ? null
+                    : signInWithArgs(
+                        context,
+                        SpotifySignInArgs(
+                          clientId: SPOTIFY_CLIENT_ID!,
+                          clientSecret: SPOTIFY_CLIENT_SECRET!,
+                          redirectUri: REDIRECT_URI,
+                          scopes: SpotifyScope.values,
+                        ),
+                      ),
               ),
               ElevatedButton(
                 child: const Text('Sign in with GitHub'),

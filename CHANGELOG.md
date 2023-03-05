@@ -1,4 +1,9 @@
-# 0.0.11
+# 0.0.12
+
+- Feat: Spotify authorization flow
+- Chore: update dependencies & SDK constraints
+
+## 0.0.11
 
 = Fix: return nil instead of FlutterErrorNotImplemented on iOS
 
