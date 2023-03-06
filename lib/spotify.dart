@@ -82,6 +82,10 @@ class SpotifySignInArgs extends ProviderArgs {
 
       return AuthResult(
         accessToken: decodedRes['access_token'],
+        tokenType: decodedRes['token_type'],
+        scope: decodedRes['scope'],
+        expiresIn: decodedRes['expires_in'],
+        refreshToken: decodedRes['refresh_token'],
       );
     } else {
       throw Exception(
